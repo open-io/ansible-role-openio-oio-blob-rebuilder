@@ -1,6 +1,6 @@
-# roles/ROLENAME/vars/Debian.yml
+# roles/blob_rebuilder/vars/Debian.yml
 # Distribution-specific variables for Ubuntu, Debian, ...
 ---
-ROLENAME_packages:
-  - openio-ROLENAME
+blob_rebuilder_packages:
+  - openio-sds
 ...

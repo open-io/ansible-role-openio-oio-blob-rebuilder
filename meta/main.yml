@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   author: Cedric DELGEHIER <cedric@openio.io>
-  description: PURPOSE
+  description: Install and Configure OpenIO blob rebuilder
   company: OpenIO
   license: Apache
 

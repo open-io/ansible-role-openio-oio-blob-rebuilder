@@ -1,6 +1,6 @@
-# roles/ROLENAME/vars/RedHat.yml
+# roles/blob_rebuilder/vars/RedHat.yml
 # Distribution-specific variables for RHEL, CentOS, ...
 ---
-ROLENAME_packages:
-  - openio-ROLENAME
+blob_rebuilder_packages:
+  - openio-sds-server
 ...

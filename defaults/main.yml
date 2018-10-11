@@ -1,16 +1,17 @@
-# roles/ROLENAME/defaults/main.yml
+# roles/blob_rebuilder/defaults/main.yml
 ---
-openio_ROLENAME_namespace: "OPENIO"
-openio_ROLENAME_serviceid: "0"
+openio_blob_rebuilder_namespace: "OPENIO"
+openio_blob_rebuilder_serviceid: "0"
 
-openio_ROLENAME_gridinit_dir: "/etc/gridinit.d/{{ openio_ROLENAME_namespace }}"
-openio_ROLENAME_gridinit_file_prefix: ""
+openio_blob_rebuilder_gridinit_dir: "/etc/gridinit.d/{{ openio_blob_rebuilder_namespace }}"
+openio_blob_rebuilder_gridinit_file_prefix: ""
+openio_blob_rebuilder_gridinit_on_die: respawn
+openio_blob_rebuilder_gridinit_start_at_boot: true
 
-#openio_ROLENAME_bind_interface: "{{ ansible_default_ipv4.alias }}"
-#openio_ROLENAME_bind_address:
-#  "{{ hostvars[inventory_hostname]['ansible_' + openio_ROLENAME_bind_interface]['ipv4']['address'] }}"
+openio_blob_rebuilder_allow_same_raw: false
+openio_blob_rebuilder_worker: 10
+openio_blob_rebuilder_chunks_per_second : 30
+openio_blob_rebuilder_event_agent_url: "beanstalk://{{ ansible_default_ipv4.address }}:6014"
 
-#openio_ROLENAME_volume: "/var/lib/oio/sds/{{ openio_ROLENAME_namespace }}/ROLENAME-{{ openio_ROLENAME_serviceid }}"
-openio_ROLENAME_provision_only: false
-openio_ROLENAME_location: "{{ ansible_hostname }}.{{ openio_ROLENAME_serviceid }}"
+openio_blob_rebuilder_provision_only: false
 ...

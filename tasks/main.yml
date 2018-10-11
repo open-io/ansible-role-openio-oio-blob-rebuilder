@@ -1,4 +1,4 @@
-# roles/ROLENAME/tasks/main.yml
+# roles/blob_rebuilder/tasks/main.yml
 ---
 - name: "Include {{ ansible_distribution }} variables"
   include_vars: "{{ item }}"
@@ -33,10 +33,9 @@
     path: "{{ item }}"
   register: _dir
   with_items:
-    - "/etc/gridinit.d/{{ openio_ROLENAME_namespace }}"
-    - "{{ openio_ROLENAME_sysconfig_dir }}/ROLENAME-{{ openio_ROLENAME_serviceid }}"
-    #- "{{ openio_ROLENAME_volume }}"
-    - "/var/log/oio/sds/{{ openio_ROLENAME_namespace }}/ROLENAME-{{ openio_ROLENAME_serviceid }}"
+    - "/etc/gridinit.d/{{ openio_blob_rebuilder_namespace }}"
+    - "{{ openio_blob_rebuilder_sysconfig_dir }}/oio-blob-rebuilder-{{ openio_blob_rebuilder_serviceid }}"
+    - "/var/log/oio/sds/{{ openio_blob_rebuilder_namespace }}/oio-blob-rebuilder-{{ openio_blob_rebuilder_serviceid }}"
 
 - name: Ensure directories exists
   file:
@@ -58,20 +57,21 @@
     group: openio
     mode: 0644
   with_items:
-    - src: "ROLENAME.conf.j2"
-      dest: "{{ openio_ROLENAME_sysconfig_dir }}/\
-        ROLENAME-{{ openio_ROLENAME_serviceid }}/ROLENAME-{{ openio_ROLENAME_serviceid }}.conf"
-    - src: "gridinit_ROLENAME.conf.j2"
-      dest: "{{ openio_ROLENAME_gridinit_dir }}/{{ openio_ROLENAME_gridinit_file_prefix }}\
-        ROLENAME-{{ openio_ROLENAME_serviceid }}.conf"
-  register: _ROLENAME_conf
+    - src: "blob_rebuilder.conf.j2"
+      dest: "{{ openio_blob_rebuilder_sysconfig_dir }}/\
+        oio-blob-rebuilder-{{ openio_blob_rebuilder_serviceid }}/\
+        oio-blob-rebuilder-{{ openio_blob_rebuilder_serviceid }}.conf"
+    - src: "gridinit_blob_rebuilder.conf.j2"
+      dest: "{{ openio_blob_rebuilder_gridinit_dir }}/{{ openio_blob_rebuilder_gridinit_file_prefix }}\
+        oio-blob-rebuilder-{{ openio_blob_rebuilder_serviceid }}.conf"
+  register: _blob_rebuilder_conf
 
-- name: restart ROLENAME
+- name: restart blob_rebuilder
   shell: |
     gridinit_cmd reload
-    gridinit_cmd restart  {{openio_ROLENAME_namespace}}-ROLENAME-{{openio_ROLENAME_serviceid}}
+    gridinit_cmd restart  {{openio_blob_rebuilder_namespace}}-oio-blob-rebuilder-{{openio_blob_rebuilder_serviceid}}
   when: 
-    - _ROLENAME_conf.changed
-    - not openio_ROLENAME_provision_only
+    - _blob_rebuilder_conf.changed
+    - not openio_blob_rebuilder_provision_only
   tags: configure
 ...

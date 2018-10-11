@@ -1,8 +1,8 @@
-# roles/ROLENAME/handlers/main.yml
+# roles/blob_rebuilder/handlers/main.yml
 ---
-#- name: restart ROLENAME
+#- name: restart blob_rebuilder
 #  service:
-#    name: "{{ ROLENAME_service }}"
+#    name: "{{ blob_rebuilder_service }}"
 #    state: restarted
 #
 ...
