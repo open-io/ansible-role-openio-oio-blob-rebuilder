@@ -10,7 +10,7 @@ openio_blob_rebuilder_gridinit_start_at_boot: true
 
 openio_blob_rebuilder_allow_same_raw: false
 openio_blob_rebuilder_worker: 10
-openio_blob_rebuilder_chunks_per_second : 30
+openio_blob_rebuilder_chunks_per_second: 30
 openio_blob_rebuilder_event_agent_url: "beanstalk://{{ ansible_default_ipv4.address }}:6014"
 
 openio_blob_rebuilder_provision_only: false

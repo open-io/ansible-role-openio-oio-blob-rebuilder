@@ -70,7 +70,7 @@
   shell: |
     gridinit_cmd reload
     gridinit_cmd restart  {{openio_blob_rebuilder_namespace}}-oio-blob-rebuilder-{{openio_blob_rebuilder_serviceid}}
-  when: 
+  when:
     - _blob_rebuilder_conf.changed
     - not openio_blob_rebuilder_provision_only
   tags: configure
