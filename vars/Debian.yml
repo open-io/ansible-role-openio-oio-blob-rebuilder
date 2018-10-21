@@ -3,4 +3,5 @@
 ---
 blob_rebuilder_packages:
   - openio-sds
+syslog_user: syslog
 ...

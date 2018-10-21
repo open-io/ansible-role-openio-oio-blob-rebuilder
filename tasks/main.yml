@@ -35,7 +35,6 @@
   with_items:
     - "/etc/gridinit.d/{{ openio_blob_rebuilder_namespace }}"
     - "{{ openio_blob_rebuilder_sysconfig_dir }}/oio-blob-rebuilder-{{ openio_blob_rebuilder_serviceid }}"
-    - "/var/log/oio/sds/{{ openio_blob_rebuilder_namespace }}/oio-blob-rebuilder-{{ openio_blob_rebuilder_serviceid }}"
 
 - name: Ensure directories exists
   file:
@@ -47,6 +46,16 @@
     recurse: true
   with_items: "{{ _dir.results }}"
   when: not item.stat.exists
+  tags: install
+
+- name: Ensure log directory
+  file:
+    path: "/var/log/oio/sds/{{ openio_blob_rebuilder_namespace }}/oio-blob-rebuilder-{{ openio_blob_rebuilder_serviceid }}"
+    state: directory
+    owner: "{{ syslog_user }}"
+    group: openio
+    mode: 0750
+    recurse: true
   tags: install
 
 - name: Generate configuration files
