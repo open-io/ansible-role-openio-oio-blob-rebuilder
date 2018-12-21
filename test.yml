@@ -5,11 +5,12 @@
   vars:
     NS: TRAVIS
   roles:
+    - role: users
     - role: repo
       openio_repository_no_log: false
       openio_repository_products:
         sds:
-          release: "18.04"
+          release: "18.10"
     - role: namespace
       openio_namespace_name: "{{ NS }}"
     - role: gridinit
