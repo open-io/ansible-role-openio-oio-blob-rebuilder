@@ -7,20 +7,6 @@
     - "{{ ansible_os_family }}.yml"
   tags: install
 
-- name: Create the 'openio' group
-  group:
-    name: openio
-    gid: "{{ openio_group_openio_gid | default('220')}}"
-  tags: install
-
-- name: Create the 'openio' user
-  user:
-    name: openio
-    comment: "openio account"
-    uid: "{{ openio_user_openio_uid | default('120')}}"
-    group: openio
-  tags: install
-
 - name: "Include {{ ansible_distribution }} tasks"
   include_tasks: "{{ item }}"
   with_first_found:
@@ -28,34 +14,19 @@
     - "{{ ansible_os_family }}.yml"
   tags: install
 
-- name: Test directories presence
-  stat:
-    path: "{{ item }}"
-  register: _dir
-  with_items:
-    - "/etc/gridinit.d/{{ openio_blob_rebuilder_namespace }}"
-    - "{{ openio_blob_rebuilder_sysconfig_dir }}/oio-blob-rebuilder-{{ openio_blob_rebuilder_serviceid }}"
-
 - name: Ensure directories exists
   file:
-    path: "{{ item.item }}"
+    path: "{{ item.path }}"
     state: directory
-    owner: openio
-    group: openio
-    mode: 0755
-    recurse: true
-  with_items: "{{ _dir.results }}"
-  when: not item.stat.exists
-  tags: install
-
-- name: Ensure log directory
-  file:
-    path: "/var/log/oio/sds/{{ openio_blob_rebuilder_namespace }}/oio-blob-rebuilder-{{ openio_blob_rebuilder_serviceid }}"
-    state: directory
-    owner: "{{ syslog_user }}"
-    group: openio
-    mode: 0750
-    recurse: true
+    owner: "{{ item.owner | default('openio') }}"
+    group: "{{ item.group | default('openio') }}"
+    mode: "{{ item.mode | default(0755) }}"
+  with_items:
+    - path: "/etc/gridinit.d/{{ openio_blob_rebuilder_namespace }}"
+    - path: "{{ openio_blob_rebuilder_sysconfig_dir }}/{{ openio_blob_rebuilder_servicename }}"
+    - path: "/var/log/oio/sds/{{ openio_blob_rebuilder_namespace }}/{{ openio_blob_rebuilder_servicename }}"
+      owner: "{{ syslog_user }}"
+      mode: "0750"
   tags: install
 
 - name: Generate configuration files
@@ -68,17 +39,17 @@
   with_items:
     - src: "blob_rebuilder.conf.j2"
       dest: "{{ openio_blob_rebuilder_sysconfig_dir }}/\
-        oio-blob-rebuilder-{{ openio_blob_rebuilder_serviceid }}/\
-        oio-blob-rebuilder-{{ openio_blob_rebuilder_serviceid }}.conf"
+        {{ openio_blob_rebuilder_servicename }}/\
+        {{ openio_blob_rebuilder_servicename }}.conf"
     - src: "gridinit_blob_rebuilder.conf.j2"
       dest: "{{ openio_blob_rebuilder_gridinit_dir }}/{{ openio_blob_rebuilder_gridinit_file_prefix }}\
-        oio-blob-rebuilder-{{ openio_blob_rebuilder_serviceid }}.conf"
+        {{ openio_blob_rebuilder_servicename }}.conf"
   register: _blob_rebuilder_conf
 
 - name: restart blob_rebuilder
   shell: |
     gridinit_cmd reload
-    gridinit_cmd restart  {{openio_blob_rebuilder_namespace}}-oio-blob-rebuilder-{{openio_blob_rebuilder_serviceid}}
+    gridinit_cmd restart  {{ openio_blob_rebuilder_namespace }}-{{ openio_blob_rebuilder_servicename }}
   when:
     - _blob_rebuilder_conf.changed
     - not openio_blob_rebuilder_provision_only

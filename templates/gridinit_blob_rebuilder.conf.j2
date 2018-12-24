@@ -1,5 +1,5 @@
 # {{ ansible_managed }}
-[Service.{{ openio_blob_rebuilder_namespace }}-oio-blob-rebuilder-{{ openio_blob_rebuilder_serviceid }}]
+[Service.{{ openio_blob_rebuilder_namespace }}-{{ openio_blob_rebuilder_servicename }}]
 command=/usr/bin/oio-blob-rebuilder --beanstalkd {{ openio_blob_rebuilder_event_agent_url }} --log-facility local0 --log-syslog-prefix OIO,{{ openio_blob_rebuilder_namespace }},oio-blob-rebuilder,{{ openio_blob_rebuilder_serviceid }} {% if openio_blob_rebuilder_worker %}--workers {{ openio_blob_rebuilder_worker }}{% endif %} {% if openio_blob_rebuilder_chunks_per_second %}--chunks-per-second {{ openio_blob_rebuilder_chunks_per_second }}{% endif %} {% if openio_blob_rebuilder_allow_same_raw %}--allow-same-raw{% endif %} {{ openio_blob_rebuilder_namespace }}
 
 enabled=true
