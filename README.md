@@ -15,17 +15,17 @@ An Ansible role for the blob rebuilder. Specifically, the responsibilities of th
 
 | Variable   | Default | Comments (type)  |
 | :---       | :---    | :---             |
-| `openio_blob_rebuilder_allow_same_raw` | `false` | ... |
-| `openio_blob_rebuilder_chunks_per_second` | `30` | ... |
-| `openio_blob_rebuilder_event_agent_url` | `"beanstalk://{{ ansible_default_ipv4.address }}:6014"` | ... |
-| `openio_blob_rebuilder_gridinit_dir` | `"/etc/gridinit.d/{{ openio_blob_rebuilder_namespace }}"` | ... |
-| `openio_blob_rebuilder_gridinit_file_prefix` | `""` | ... |
-| `openio_blob_rebuilder_gridinit_on_die` | `respawn` | ... |
-| `openio_blob_rebuilder_gridinit_start_at_boot` | `true` | ... |
-| `openio_blob_rebuilder_namespace` | `"OPENIO"` | ... |
-| `openio_blob_rebuilder_provision_only` | `false` | ... |
-| `openio_blob_rebuilder_serviceid` | `"0"` | ... |
-| `openio_blob_rebuilder_worker` | `10` | ... |
+| `openio_blob_rebuilder_allow_same_raw` | `false` | Allow rebuilding a chunk on the original rawx |
+| `openio_blob_rebuilder_chunks_per_second` | `30` | Max chunks per second per worker |
+| `openio_blob_rebuilder_event_agent_url` | `"beanstalk://{{ ansible_default_ipv4.address }}:6014"` | Read chunks from this file instead of rdir |
+| `openio_blob_rebuilder_gridinit_dir` | `"/etc/gridinit.d/{{ openio_blob_rebuilder_namespace }}"` | Path to copy the gridinit conf |
+| `openio_blob_rebuilder_gridinit_file_prefix` | `""` | Maybe set it to {{ openio_ecd_namespace }}- for old gridinit's style |
+| `openio_blob_rebuilder_gridinit_on_die` | `respawn` | Behaviour on failure |
+| `openio_blob_rebuilder_gridinit_start_at_boot` | `true` | Start at system boot |
+| `openio_blob_rebuilder_namespace` | `"OPENIO"` | Namespace |
+| `openio_blob_rebuilder_provision_only` | `false` | Provision only without restarting services |
+| `openio_blob_rebuilder_serviceid` | `"0"` | ID in gridinit |
+| `openio_blob_rebuilder_worker` | `10` | Number of worker concurrently |
 
 ## Dependencies
 No dependencies.
