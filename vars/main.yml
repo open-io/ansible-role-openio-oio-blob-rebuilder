@@ -1,6 +1,6 @@
 ---
 openio_blob_rebuilder_sysconfig_dir: "/etc/oio/sds/{{ openio_blob_rebuilder_namespace }}"
-openio_blob_rebuilder_servicename: "blob_rebuilder-{{ openio_blob_rebuilder_serviceid }}"
+openio_blob_rebuilder_servicename: "oio-blob-rebuilder-{{ openio_blob_rebuilder_serviceid }}"
 
 openio_blob_rebuilder_definition_file: >
   "{{ openio_blob_rebuilder_sysconfig_dir }}/
