@@ -1,7 +1,7 @@
 # roles/blob_rebuilder/defaults/main.yml
 ---
-openio_blob_rebuilder_namespace: "OPENIO"
-openio_blob_rebuilder_serviceid: "0"
+openio_blob_rebuilder_namespace: "{{ namespace | default('OPENIO') }}"
+openio_blob_rebuilder_serviceid: "{{ 0 + openio_legacy_serviceid | d(0) | int }}"
 
 openio_blob_rebuilder_gridinit_dir: "/etc/gridinit.d/{{ openio_blob_rebuilder_namespace }}"
 openio_blob_rebuilder_gridinit_file_prefix: ""
@@ -11,7 +11,7 @@ openio_blob_rebuilder_gridinit_start_at_boot: true
 openio_blob_rebuilder_allow_same_raw: false
 openio_blob_rebuilder_worker: 10
 openio_blob_rebuilder_chunks_per_second: 30
-openio_blob_rebuilder_event_agent_url: "beanstalk://{{ ansible_default_ipv4.address }}:6014"
+openio_blob_rebuilder_event_agent_url: "beanstalk://{{ openio_bind_address | d(ansible_default_ipv4.address) }}:6014"
 
 openio_blob_rebuilder_provision_only: false
 ...
