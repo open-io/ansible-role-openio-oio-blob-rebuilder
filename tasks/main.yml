@@ -46,12 +46,24 @@
         {{ openio_blob_rebuilder_servicename }}.conf"
   register: _blob_rebuilder_conf
 
-- name: restart blob_rebuilder
+- name: "restart blob_rebuilder to apply the new configuration"
   shell: |
     gridinit_cmd reload
     gridinit_cmd restart  {{ openio_blob_rebuilder_namespace }}-{{ openio_blob_rebuilder_servicename }}
+  register: _restart_blob_rebuilder
   when:
-    - _blob_rebuilder_conf.changed
+    - _blob_rebuilder_conf is changed
     - not openio_blob_rebuilder_provision_only
   tags: configure
+
+- block:
+    - name: "Ensure blob_rebuilder is started"
+      command: gridinit_cmd start {{ openio_blob_rebuilder_namespace }}-{{ openio_blob_rebuilder_servicename }}
+      register: _start_blob_rebuilder
+      changed_when: '"Success" in _start_blob_rebuilder.stdout'
+      when:
+        - not openio_blob_rebuilder_provision_only
+        - _restart_blob_rebuilder is skipped
+      tags: configure
+  when: openio_bootstrap | d(false)
 ...
