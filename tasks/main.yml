@@ -5,7 +5,9 @@
   with_first_found:
     - "{{ ansible_distribution }}.yml"
     - "{{ ansible_os_family }}.yml"
-  tags: install
+  tags:
+    - install
+    - configure
 
 - name: "Include {{ ansible_distribution }} tasks"
   include_tasks: "{{ item }}"
@@ -27,7 +29,7 @@
     - path: "/var/log/oio/sds/{{ openio_blob_rebuilder_namespace }}/{{ openio_blob_rebuilder_servicename }}"
       owner: "{{ syslog_user }}"
       mode: "0750"
-  tags: install
+  tags: configure
 
 - name: Generate configuration files
   template:
@@ -45,6 +47,7 @@
       dest: "{{ openio_blob_rebuilder_gridinit_dir }}/{{ openio_blob_rebuilder_gridinit_file_prefix }}\
         {{ openio_blob_rebuilder_servicename }}.conf"
   register: _blob_rebuilder_conf
+  tags: configure
 
 - name: "restart blob_rebuilder to apply the new configuration"
   shell: |
