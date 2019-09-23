@@ -26,6 +26,7 @@ An Ansible role for the blob rebuilder. Specifically, the responsibilities of th
 | `openio_blob_rebuilder_provision_only` | `false` | Provision only without restarting services |
 | `openio_blob_rebuilder_serviceid` | `"0"` | ID in gridinit |
 | `openio_blob_rebuilder_worker` | `10` | Number of worker concurrently |
+| `openio_blob_rebuilder_package_upgrade` | `false` | Set the packages to the latest version (to be set in extra_vars) |
 
 ## Dependencies
 No dependencies.
