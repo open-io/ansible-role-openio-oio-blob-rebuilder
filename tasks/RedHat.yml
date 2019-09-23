@@ -2,7 +2,7 @@
 - name: Install packages
   package:
     name: "{{ pkg }}"
-    state: present
+    state: "{{ 'latest' if openio_blob_rebuilder_package_upgrade else 'present' }}"
   with_items: "{{ blob_rebuilder_packages }}"
   loop_control:
     loop_var: pkg
