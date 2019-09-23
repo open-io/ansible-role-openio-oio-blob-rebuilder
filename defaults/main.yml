@@ -14,4 +14,5 @@ openio_blob_rebuilder_chunks_per_second: 30
 openio_blob_rebuilder_event_agent_url: "beanstalk://{{ openio_bind_address | d(ansible_default_ipv4.address) }}:6014"
 
 openio_blob_rebuilder_provision_only: false
+openio_blob_rebuilder_package_upgrade: "{{ openio_package_upgrade | d(false) }}"
 ...
