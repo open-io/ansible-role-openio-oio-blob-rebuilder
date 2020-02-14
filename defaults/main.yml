@@ -1,4 +1,3 @@
-# roles/blob_rebuilder/defaults/main.yml
 ---
 openio_blob_rebuilder_namespace: "{{ namespace | default('OPENIO') }}"
 openio_blob_rebuilder_serviceid: "{{ 0 + openio_legacy_serviceid | d(0) | int }}"
@@ -15,4 +14,11 @@ openio_blob_rebuilder_event_agent_url: "beanstalk://{{ openio_bind_address | d(a
 
 openio_blob_rebuilder_provision_only: false
 openio_blob_rebuilder_package_upgrade: "{{ openio_package_upgrade | d(false) }}"
+
+openio_blob_rebuilder_sysconfig_dir: "/etc/oio/sds/{{ openio_blob_rebuilder_namespace }}"
+openio_blob_rebuilder_servicename: "oio-blob-rebuilder-{{ openio_blob_rebuilder_serviceid }}"
+
+openio_blob_rebuilder_definition_file: >
+  "{{ openio_blob_rebuilder_sysconfig_dir }}/
+  {{ openio_blob_rebuilder_servicename }}/{{ openio_blob_rebuilder_servicename }}.conf"
 ...
