@@ -2,8 +2,8 @@
 openio_blob_rebuilder_namespace: "{{ namespace | default('OPENIO') }}"
 openio_blob_rebuilder_serviceid: "{{ 0 + openio_legacy_serviceid | d(0) | int }}"
 
-openio_blob_rebuilder_gridinit_dir: "/etc/gridinit.d/{{ openio_blob_rebuilder_namespace }}"
-openio_blob_rebuilder_gridinit_file_prefix: ""
+openio_blob_rebuilder_gridinit_dir: "{{ openio_gridinit_d | d('/etc/gridinit.d/') }}"
+openio_blob_rebuilder_gridinit_file_prefix: "{{ openio_blob_rebuilder_namespace }}-"
 openio_blob_rebuilder_gridinit_on_die: respawn
 openio_blob_rebuilder_gridinit_start_at_boot: true
 
@@ -12,7 +12,7 @@ openio_blob_rebuilder_worker: 10
 openio_blob_rebuilder_chunks_per_second: 30
 openio_blob_rebuilder_event_agent_url: "beanstalk://{{ openio_bind_address | d(ansible_default_ipv4.address) }}:6014"
 
-openio_blob_rebuilder_provision_only: false
+openio_blob_rebuilder_provision_only: "{{ openio_maintenance_mode | d(false) | bool }}"
 openio_blob_rebuilder_package_upgrade: "{{ openio_package_upgrade | d(false) }}"
 
 openio_blob_rebuilder_sysconfig_dir: "/etc/oio/sds/{{ openio_blob_rebuilder_namespace }}"

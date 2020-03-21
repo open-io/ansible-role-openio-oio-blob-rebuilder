@@ -24,7 +24,6 @@
     group: "{{ item.group | default('openio') }}"
     mode: "{{ item.mode | default(0755) }}"
   with_items:
-    - path: "/etc/gridinit.d/{{ openio_blob_rebuilder_namespace }}"
     - path: "{{ openio_blob_rebuilder_sysconfig_dir }}/{{ openio_blob_rebuilder_servicename }}"
     - path: "/var/log/oio/sds/{{ openio_blob_rebuilder_namespace }}/{{ openio_blob_rebuilder_servicename }}"
       owner: "{{ syslog_user }}"
