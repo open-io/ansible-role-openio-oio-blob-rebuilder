@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/open-io/ansible-role-openio-oio-blob-rebuilder.svg?branch=master)](https://travis-ci.org/open-io/ansible-role-openio-oio-blob-rebuilder)
+[![Build Status](https://travis-ci.org/open-io/ansible-role-openio-oio-blob-rebuilder.svg?branch=20.04)](https://travis-ci.org/open-io/ansible-role-openio-oio-blob-rebuilder)
 # Ansible role `blob_rebuilder`
 
 An Ansible role for the blob rebuilder. Specifically, the responsibilities of this role are to:
